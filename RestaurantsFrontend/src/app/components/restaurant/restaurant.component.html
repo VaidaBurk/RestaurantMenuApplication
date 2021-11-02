@@ -1,0 +1,93 @@
+<div class="container">
+
+    <div class="card mt-3 mb-3 p-2 text-center">
+        <span>Restaurants</span>
+      </div>
+
+    <div class="row g-2">
+        <input hidden type="number" class="form-control" id="restaurantId" [(ngModel)]="id">
+        <div class="col-md-4">
+            <div class="form-floating mb-2">
+                <input type="text" class="form-control" id="restaurantTitleInput" placeholder="Restaurant title" [(ngModel)]="title">
+                <label for="restaurantTitleInput">Restaurant title</label>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-floating mb-2">
+                <input type="number" class="form-control" id="restaurantCustomersCountInput" placeholder="Customers number" 
+                    [(ngModel)]="customers">
+                <label for="restaurantCustomersCountInput">Customers number</label>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-floating mb-2">
+                <input type="number" class="form-control form-control-sm" id="restaurantEmployeesCountInput"
+                    placeholder="Employees number" [(ngModel)]="employees">
+                <label for="restaurantEmployeesCountInput">Employees number</label>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-floating">
+            <select class="form-select form-select-sm" id="dishSelect"
+            [(ngModel)]="dishId" [ngModelOptions]="{standalone: true}">
+                <option selected>Select...</option>
+                <option *ngFor="let dish of menu" [ngValue]="dish.id">
+                {{ dish.title }}
+                </option>
+            </select>
+            <label for="dishSelect">Dish of the day</label>
+        </div>
+        </div>
+    </div>
+
+    <div class="col mb-2">
+        <button type="button" class="btn btn-primary btn-sm me-2" 
+            (click)="createRestaurant()" *ngIf="displaySaveButton">Create new restaurant</button>
+        <button type="button" class="btn btn-primary btn-sm" 
+            (click)="saveUpdatedRestaurant()" *ngIf="displayUpdateButton">Update restaurant</button>
+    </div>
+
+    <div class="row mb-3 mt-3">
+        <div class="col-md-4">
+            <label for="dishSelect">Filter by dish</label>
+                <select class="form-select form-select-sm" id="dishSelect"
+                [(ngModel)]="filterDishId" [ngModelOptions]="{standalone: true}">
+                    <option selected [ngValue]=0>All Restaurants</option>
+                    <option *ngFor="let dish of menu" [ngValue]="dish.id">
+                        {{ dish.title }}
+                    </option>
+                </select>
+                <button type="button" class="btn btn-primary btn-sm mt-1" (click)="filterByDish(filterDishId)">Filter</button>
+        </div>
+    </div>
+
+    <table class="table table-hover table-bordered">
+        <thead class="table-primary">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col" class="ps-3 pe-3">Title</th>
+                <th scope="col" class="ps-3 pe-3">Customers</th>
+                <th scope="col" class="ps-3 pe-3">Employess</th>
+                <th scope="col" class="ps-3 pe-3">Meal of the day</th>
+                <th scope="col" class="ps-3 pe-3"></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="p-3" *ngFor="let restaurant of restaurants">
+                <th>{{ restaurant.id }}</th>
+                <td class="ps-3 pe-3">{{ restaurant.title }}</td>
+                <td class="ps-3 pe-3 text-center">{{ restaurant.customers }}</td>
+                <td class="ps-3 pe-3 text-center">{{ restaurant.employees }}</td>
+                <td class="ps-3 pe-3 text-center">{{ restaurant.dishTitle }}</td>
+                <td class="ps-3 pe-3 text-center">
+                    <button type="button" class="btn btn-outline-danger btn-sm me-2" (click)=deleteRestaurant(restaurant.id)>Delete</button>
+                    <button type="button" class="btn btn-outline-info btn-sm" (click)=updateRestaurant(restaurant)>Update</button>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+
+
+</div>
