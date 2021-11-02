@@ -31,7 +31,7 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.dishService.getAll().subscribe((data) => {
-      this.menu = data
+      this.menu = data;
       this.sharedService.loadMenu(this.menu);
     });
   }
@@ -53,7 +53,13 @@ export class MenuComponent implements OnInit {
       description: this.description
     }
     this.dishService.create(newDish).subscribe((dishWithId) => {this.menu.push(dishWithId)});
-    console.log(this.menu);
+    this.sharedService.loadMenu(this.menu);
+    
+    this.title = "";
+    this.price = null;
+    this.weight = null;
+    this.meatWeight = null;
+    this.description = "";
     
     this.sharedService.loadMenu(this.menu);
   }
@@ -81,6 +87,7 @@ export class MenuComponent implements OnInit {
     
     this.dishService.update(updatedDish).subscribe(() => {
       this.menu = this.menu.map(dish => dish.id !== updatedDish.id ? dish : updatedDish)
+      this.sharedService.loadMenu(this.menu);
     });
 
     this.displayUpdateButton = false;
