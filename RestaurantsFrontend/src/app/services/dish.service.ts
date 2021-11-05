@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Dish } from '../models/dish';
 import { BehaviorSubject } from 'rxjs';
@@ -9,20 +9,17 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class DishService {
 
-  private http: HttpClient;
-
   private menuSource = new BehaviorSubject<Dish[]>([]);
 
-  constructor(http: HttpClient) {
-    this.http = http;
-  }
+  constructor(private http: HttpClient) 
+  {  }
 
   public getAll(): Observable<Dish[]>{
     return this.http.get<Dish[]>('https://localhost:44342/Menu');
   }
 
   public delete(id: number) : Observable<Dish> {
-    return this.http.delete<Dish>(`https://localhost:44342/Menu?id=${id}`);
+    return this.http.delete<Dish>(`https://localhost:44342/Menu?id=${id}`)
   }
 
   public create(dish: Dish) : Observable<Dish> {

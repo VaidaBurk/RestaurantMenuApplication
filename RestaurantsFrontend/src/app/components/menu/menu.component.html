@@ -1,8 +1,12 @@
 <div class="container">
+    <div class="d-grid gap-2">
+        <button class="btn btn-success mb-3 mt-3" type="button" data-bs-toggle="collapse" data-bs-target="#menuContainer" aria-expanded="false" aria-controls="menuContainer">
+            Menu
+          </button>
+    </div>
+</div>
 
-    <div class="card mt-3 mb-3 p-2 text-center">
-        <span>Menu</span>
-      </div>
+<div class="container collapse" id="menuContainer">
 
     <div class="row g-2">
         <input hidden type="number" class="form-control" id="dishId" [(ngModel)]="id">
@@ -46,25 +50,23 @@
 
     <div class="col mb-2">
         <button type="button" class="btn btn-success btn-sm" (click)="createDish()" *ngIf="displaySaveButton">Create new dish</button>
-        <button type="button" class="btn btn-primary btn-sm" 
+        <button type="button" class="btn btn-success btn-sm" 
         (click)="saveUpdatedDish()" *ngIf="displayUpdateButton">Update dish</button>
     </div>
 
     <table class="table table-hover table-bordered">
         <thead class="table-success">
             <tr>
-                <th scope="col">#</th>
                 <th scope="col" class="ps-3 pe-3">Title</th>
-                <th scope="col" class="ps-3 pe-3">Price, Eur</th>
-                <th scope="col" class="ps-3 pe-3">Weight, g</th>
-                <th scope="col" class="ps-3 pe-3">Meat weight, g</th>
-                <th scope="col" class="ps-3 pe-3">Description</th>
+                <th scope="col" class="ps-3 pe-3 text-center">Price, Eur</th>
+                <th scope="col" class="ps-3 pe-3 text-center">Weight, g</th>
+                <th scope="col" class="ps-3 pe-3 text-center">Meat weight, g</th>
+                <th scope="col" class="ps-3 pe-3 text-center">Description</th>
                 <th scope="col" class="ps-3 pe-3"></th>
             </tr>
         </thead>
         <tbody>
             <tr class="p-3" *ngFor="let dish of menu">
-                <th>{{ dish.id }}</th>
                 <td class="ps-3 pe-3">{{ dish.title }}</td>
                 <td class="ps-3 pe-3 text-center">{{ dish.price }}</td>
                 <td class="ps-3 pe-3 text-center">{{ dish.weight }}</td>

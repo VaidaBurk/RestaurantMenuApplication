@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Dish } from 'src/app/models/dish';
 import { DishService } from 'src/app/services/dish.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
@@ -22,11 +23,13 @@ export class MenuComponent implements OnInit {
   public displayUpdateButton = false;
   
   public menu: Dish[] = [];
+  public errorMessage: string = '';
 
 
   constructor(
     private dishService: DishService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private errorHandler: ErrorHandlerService
   ) { }
 
   ngOnInit(): void {
@@ -39,8 +42,12 @@ export class MenuComponent implements OnInit {
   public deleteDish(id: number) : void {
     this.dishService.delete(id).subscribe(() => {
       this.menu = this.menu.filter((dish) => {
-        return dish.id != id
+        return dish.id != id;
       })
+      this.sharedService.loadMenu(this.menu);
+    },
+    (error) => {
+      alert("This dish can't be deleted because it is used in restaurants.");
     });
   }
 
@@ -52,16 +59,15 @@ export class MenuComponent implements OnInit {
       meatWeight: this.meatWeight,
       description: this.description
     }
+
     this.dishService.create(newDish).subscribe((dishWithId) => {this.menu.push(dishWithId)});
     this.sharedService.loadMenu(this.menu);
-    
+
     this.title = "";
     this.price = null;
     this.weight = null;
     this.meatWeight = null;
     this.description = "";
-    
-    this.sharedService.loadMenu(this.menu);
   }
 
   public updateDish(dish: Dish) : void {

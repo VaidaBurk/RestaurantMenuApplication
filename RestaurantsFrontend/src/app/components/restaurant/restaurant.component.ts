@@ -19,9 +19,9 @@ export class RestaurantComponent implements OnInit {
   public title: string;
   public customers: number;
   public employees: number;
-  public dishId: number;
+  public dishId: number = 0;
 
-  public filterDishId: number;
+  public filterDishId: number = 0;
 
   public displaySaveButton = true;
   public displayUpdateButton = false;

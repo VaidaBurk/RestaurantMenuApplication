@@ -4,18 +4,24 @@ using Restaurants.Models;
 using Restaurants.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web.Http;
 
 namespace Restaurants.Services
 {
     public class DishService
     {
         private readonly DishRepository _dishRepository;
+        private readonly RestaurantRepository _restaurantRepository;
         private readonly IMapper _mapper;
 
-        public DishService(DishRepository dishRepository, IMapper mapper)
+        public DishService(DishRepository dishRepository, RestaurantRepository restaurantRepository, IMapper mapper)
         {
             _dishRepository = dishRepository;
+            _restaurantRepository = restaurantRepository;
             _mapper = mapper;
         }
 
@@ -62,6 +68,24 @@ namespace Restaurants.Services
 
         public async Task RemoveAsync(int id)
         {
+            var menu = await _restaurantRepository.GetAllAsync();
+            var dishesIds = menu.Select(d => d.DishId).ToList();
+
+            //if (dishesIds.Contains(id))
+            //{
+            //    //throw new ArgumentException("Dish can't be deleted, because it is still served in restaurants.");
+            //    var resp = new HttpResponseMessage(HttpStatusCode.InternalServerError)
+            //    {
+            //        Content = new StringContent(string.Format("Product is used in retaurant")),
+            //        ReasonPhrase = "Dish can't be deleted"
+            //    };
+            //    throw new HttpResponseException(resp);
+            //}
+            //else
+            //{
+            //    var selectedDish = await _dishRepository.GetByIdAsync(id);
+            //    await _dishRepository.RemoveAsync(selectedDish);
+            //}
             var selectedDish = await _dishRepository.GetByIdAsync(id);
             await _dishRepository.RemoveAsync(selectedDish);
         }

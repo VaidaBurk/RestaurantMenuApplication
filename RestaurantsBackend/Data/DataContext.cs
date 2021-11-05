@@ -17,7 +17,8 @@ namespace Restaurants.Data
             modelBuilder.Entity<DishModel>()
                 .HasMany(d => d.Restaurants)
                 .WithOne()
-                .HasForeignKey(r => r.DishId);
+                .HasForeignKey(r => r.DishId)
+                .OnDelete(DeleteBehavior.Restrict);
 
 
             modelBuilder.Entity<DishModel>()
