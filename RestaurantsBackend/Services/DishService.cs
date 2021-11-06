@@ -5,10 +5,7 @@ using Restaurants.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web.Http;
 
 namespace Restaurants.Services
 {
@@ -68,6 +65,12 @@ namespace Restaurants.Services
 
         public async Task RemoveAsync(int id)
         {
+            var menu2 = await _dishRepository.GetByIdAsync(id);
+            if (menu2 == null)
+            {
+                throw new ArgumentException("The id does not exist");
+            }
+
             var menu = await _restaurantRepository.GetAllAsync();
             var dishesIds = menu.Select(d => d.DishId).ToList();
 

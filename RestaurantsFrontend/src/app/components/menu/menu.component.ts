@@ -47,7 +47,7 @@ export class MenuComponent implements OnInit {
       this.sharedService.loadMenu(this.menu);
     },
     (error) => {
-      alert("This dish can't be deleted because it is used in restaurants.");
+      alert(error.error);
     });
   }
 

@@ -24,7 +24,7 @@ export class RestaurantServiceService {
   }
 
   public delete(id: number) : Observable<Restaurant> {
-    return this.http.delete<Restaurant>(`https://localhost:44342/Restaurant?id=${id}`);
+    return this.http.delete<Restaurant>(`https://localhost:44342/Restaurant/${id}`);
   }
 
   public update(restaurant: Restaurant) : Observable<Restaurant> {

@@ -39,7 +39,7 @@ namespace Restaurants.Controllers
             return Ok(await _restaurantService.UpdateAsync(updatedRestaurant));
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Remove(int id)
         {
             await _restaurantService.RemoveAsync(id);

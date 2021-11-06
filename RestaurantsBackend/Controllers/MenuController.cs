@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Restaurants.Dtos;
 using Restaurants.Services;
+using System;
 using System.Threading.Tasks;
 
 namespace Restaurants.Controllers
@@ -41,11 +42,23 @@ namespace Restaurants.Controllers
             return NoContent();
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Remove(int id)
         {
-            await _dishService.RemoveAsync(id);
-            return NoContent();
+            try
+            {
+                await _dishService.RemoveAsync(id);
+                return NoContent();
+            }
+            catch (ArgumentException ex)
+            {
+                return StatusCode(404, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Something bad has happened");
+            }
+
         }
     }
 }

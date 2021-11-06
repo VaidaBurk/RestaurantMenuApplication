@@ -19,7 +19,7 @@ export class DishService {
   }
 
   public delete(id: number) : Observable<Dish> {
-    return this.http.delete<Dish>(`https://localhost:44342/Menu?id=${id}`)
+    return this.http.delete<Dish>(`https://localhost:44342/Menu/${id}`)
   }
 
   public create(dish: Dish) : Observable<Dish> {
